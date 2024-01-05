@@ -2,6 +2,8 @@ package com.demo.demo.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Set;
+import java.util.HashSet;
 
 import com.demo.demo.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 @Entity
 @Table (name =  "tb_order")
@@ -28,6 +31,9 @@ public class Order implements Serializable{
     @ManyToOne
     @JoinColumn (name = "client_id")
     private User client;
+    @OneToMany (mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
+    
     
     public Order(Long id, Instant moment, OrderStatus orderStatus,User client) {
         this.id = id;
@@ -62,6 +68,9 @@ public class Order implements Serializable{
     }
     public void setMoment(Instant moment) {
         this.moment = moment;
+    }
+    public Set<OrderItem> getItems() {
+        return items;
     }
     @Override
     public int hashCode() {

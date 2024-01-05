@@ -27,7 +27,7 @@ public class Product implements Serializable{
     private String imgUrl;
     @ManyToMany
     @JoinTable(name = "TB_PRODUCT_CATEGORY", joinColumns = @JoinColumn(name = "product_id"), 
-    inverseJoinColumns = @JoinColumn(name = "category_id"))
+        inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
     public Product(Long id, String name, String description, Double price, String imgUrl) {
         this.id = id;
