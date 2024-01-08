@@ -37,13 +37,14 @@ public class OrderItem implements Serializable{
         this.price = price;
     }
     @JsonIgnore
-    public Order gtOrder() {
+    public Order getOrder() {
         return id.getOrder();
     }
     public void setOrder(Order order) {
         id.setOrder(order);
     }
-    public Product geProduct() {
+    @JsonIgnore
+    public Product getProduct() {
         return id.getProduct();
     }
     public void setProduct (Product product) {
