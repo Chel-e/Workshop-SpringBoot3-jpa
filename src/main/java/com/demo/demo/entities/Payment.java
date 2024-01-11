@@ -2,6 +2,8 @@ package com.demo.demo.entities;
 
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,6 +21,7 @@ public class Payment {
     private Long id;
     @Column
     private Instant moment;
+    @JsonIgnore
     @OneToOne()
     @MapsId //  é utilizada para indicar que uma entidade incorporada deve compartilhar a mesma chave primária (ID) com a entidade à qual ela está associada 
     private Order order;
