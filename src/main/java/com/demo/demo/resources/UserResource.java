@@ -6,10 +6,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 import java.util.List;
 
 import com.demo.demo.entities.User;
 import com.demo.demo.services.UserService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
@@ -26,4 +32,15 @@ public class UserResource {
         User result = userService.findById(id);
         return ResponseEntity.ok().body(result);
     }
+    @PostMapping()
+    public ResponseEntity<User> insert(@RequestBody User obj) { // @RequestBody indica que o spring ira extrair do corpo da solicitacao http um obj do tipo user e enviar para esse metodo 
+        obj = userService.insert(obj);
+        // nessa classe vamos retornar um codigo diferente do convencioanla (200), vamos retornar o codigo 
+        // 201 que representa que criamos um recurso no servidor 
+        // para isso teremos que usar uma classe eespecial
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).body(obj);
+    }
+    
 }
